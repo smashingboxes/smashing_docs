@@ -1,6 +1,6 @@
 require 'erb'
 
-class SmarfDoc::TestCase
+class SmashingDocs::TestCase
   attr_reader :request, :response, :created_at, :information, :aside
   attr_accessor :template
 
