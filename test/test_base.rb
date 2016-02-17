@@ -87,4 +87,16 @@ class TestBase < SmarfDocTest
     assert_includes tests.first.compile_template, "Endpoint note",
       "Could not find note in documentation."
   end
+
+  def test_aside
+    file = SmarfDoc::Conf.output_file
+    tests= SmarfDoc.current.tests
+    first = Request.new("GET", {id: 12}, 'api/skip')
+    last  = Request.new("GET", {id: 12}, 'api/noskip')
+    SmarfDoc.aside("This is an aside")
+    SmarfDoc.run!(first, response)
+    SmarfDoc.run!(last, response)
+    assert_includes tests.first.compile_template, "This is an aside",
+      "Could not find note in documentation."
+  end
 end

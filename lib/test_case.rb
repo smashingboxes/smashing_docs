@@ -1,12 +1,12 @@
 require 'erb'
 
 class SmarfDoc::TestCase
-  attr_reader :request, :response, :created_at, :information
+  attr_reader :request, :response, :created_at, :information, :aside
   attr_accessor :template
 
-  def initialize(request, response, information = {})
-    @request, @response, @information = request, response, information
-    @created_at         = Time.now
+  def initialize(request, response, information = {}, aside = '')
+    @request, @response, @information, @aside = request, response, information, aside
+    @created_at = Time.now
   end
 
   def compile_template

@@ -16,6 +16,11 @@ class SmarfDoc
     @tests = []
   end
 
+  def aside(msg)
+    @aside = ''
+    @aside = "<aside class='notice'>\n #{msg}\n</aside>"
+  end
+
   def information(key, value)
     @information[key] = value
   end
@@ -32,7 +37,7 @@ class SmarfDoc
   end
 
   def add_test_case(request, response)
-    test = self.class::TestCase.new(request, response, @information)
+    test = self.class::TestCase.new(request, response, @information, @aside)
     test.template = self.class::Conf.template
     self.tests << test
   end
@@ -77,6 +82,10 @@ class SmarfDoc
 
   def self.information(key, value)
     current.information(key, value)
+  end
+
+  def self.aside(message)
+    current.aside(message)
   end
 
   def self.current
