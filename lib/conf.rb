@@ -1,4 +1,4 @@
-class SmarfDoc::Conf
+class SmashingDocs::Conf
   class << self
     attr_accessor :template_file, :output_file
 

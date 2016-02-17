@@ -1,18 +1,18 @@
-require_relative '../lib/smarf_doc'
+require_relative '../lib/smashing_docs'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'pry'
 
-class SmarfDocTest < Minitest::Test
+class SmashingDocsTest < Minitest::Test
   def setup
-    SmarfDoc.config do |c|
+    SmashingDocs.config do |c|
       c.template_file = 'test/fake_template.md'
       c.output_file   = 'test/fake_output.md'
     end
   end
 
   def teardown
-    SmarfDoc.finish!
+    SmashingDocs.finish!
   end
 
   # Include some fake structs that act like response/request objects.

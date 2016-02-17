@@ -1,4 +1,4 @@
-class SmarfDoc
+class SmashingDocs
   attr_accessor :tests
   def initialize
     @tests = []
@@ -48,7 +48,7 @@ class SmarfDoc
 
   def output_testcases_to_file
     docs = self.class::Conf.output_file
-    raise 'No output file specific for SmarfDoc' unless docs
+    raise 'No output file specific for SmashingDocs' unless docs
     File.delete docs if File.exists? docs
     write_to_file
   end

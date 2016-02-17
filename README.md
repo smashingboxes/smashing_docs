@@ -1,12 +1,12 @@
-# SmarfDoc
+# SmashingDocs
 
-(Formerly 'DocYoSelf')
+Based on [SmarfDoc](https://github.com/RickCarlino/smarf_doc)
 
 ![Smarf](http://i.imgur.com/f5mzeRU.png)
 
 Too many docs spoil the broth.
 
-SmarfDoc lets you turn your controller tests into API docs _without making changes to your test suite or how you write tests_.
+SmashingDocs lets you turn your controller tests into API docs _without making changes to your test suite or how you write tests_.
 
 Pop it into your test suite and watch it amaze.
 
@@ -15,17 +15,17 @@ Time for this project was provided by my employer, [SmashingBoxes](http://smashi
 ## Setup
 
 In your gemfile:
-`gem 'smarf_doc', group: :test, github: 'RickCarlino/smarf_doc'`
+`gem 'smashing_docs', group: :test, github: 'smashingboxes/smashing_docs'`
 
 In  `test_helper.rb`:
 ```ruby
-SmarfDoc.config do |c|
+SmashingDocs.config do |c|
   c.template_file = 'test/template.md.erb'
   c.output_file   = 'api_docs.md'
 end
 ```
 
-[See test/fake_template.md for template examples.](https://github.com/RickCarlino/smarf_doc/blob/master/test/fake_template.md)
+[See test/fake_template.md for template examples.](https://github.com/smashingboxes/smashing_docs/blob/master/test/fake_template.md)
 
 To run doc generation after every controller spec, put this into your `teardown` method. Or whatever method your test framework of choice will run after *every test*.
 
@@ -36,7 +36,7 @@ Running it for every test case:
 ```ruby
 class ActionController::TestCase < ActiveSupport::TestCase
   def teardown
-    SmarfDoc.run!(request, response)
+    SmashingDocs.run!(request, response)
   end
 end
 ```
@@ -47,14 +47,14 @@ end
 def test_some_api
   get :index, :users
   assert response.status == 200
-  SmarfDoc.run!(request, response)
+  SmashingDocs.run!(request, response)
 end
 ```
 
 Then put this at the bottom of your `test_helper.rb`:
 
 ```ruby
-MiniTest::Unit.after_tests { SmarfDoc.finish! }
+MiniTest::Unit.after_tests { SmashingDocs.finish! }
 ```
 
 ## Rspec Usage
@@ -64,10 +64,10 @@ Put this in your `spec_helper` and smoke it.
 ```ruby
 RSpec.configure do |config|
   config.after(:each, type: :controller) do
-    SmarfDoc.run!(request, response)
+    SmashingDocs.run!(request, response)
   end
 
-  config.after(:suite) { SmarfDoc.finish! }
+  config.after(:suite) { SmashingDocs.finish! }
 end
 ```
 
@@ -80,7 +80,7 @@ It will log all requests and responses by default, but you can add some **option
 
 ```ruby
 def test_stuff
-  SmarfDoc.skip
+  SmashingDocs.skip
   # Blahhh
 end
 ```
@@ -89,7 +89,7 @@ end
 
 ```ruby
 def test_stuff
-  SmarfDoc.note "안녕하세요. This is a note."
+  SmashingDocs.note "안녕하세요. This is a note."
   # Blahhh
 end
 ```
