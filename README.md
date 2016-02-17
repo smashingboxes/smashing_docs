@@ -162,21 +162,3 @@ end
 ```
 You can store any information with `:note`, `:message`, or any other key you can think of.
 To access information in the template, just use `<%= information[:key] %>`
-
-#### Adding an aside
-
-You can set an HTML `aside` by using `SmashingDocs.aside("Message")`
-```ruby
-it "responds with 200" do
-  SmashingDocs.aside("This endpoint prefers butterscotch")
-  # test code
-end
-```
-
-Any message set with an aside will be output as:
-
-```html
-<aside class='notice'>
-  Message
-</aside>
-```
