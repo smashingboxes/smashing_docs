@@ -50,11 +50,11 @@ class TestBase < SmarfDocTest
     SmarfDoc.run!(first, response)
     SmarfDoc.run!(last, response)
     assert_equal 1, tests.length,
-      "DYS Did not skip tests."
+      "Tests were not skipped."
     assert_equal 'api/noskip', tests.first.request.path,
-      "DYS Did not skip tests."
+      "Tests were not skipped."
   end
-  
+
   def test_multiple_skips
     file = SmarfDoc::Conf.output_file
     tests= SmarfDoc.current.tests
@@ -69,11 +69,11 @@ class TestBase < SmarfDocTest
     SmarfDoc.run!(third, response)
     SmarfDoc.run!(fourth, response)
     assert_equal 2, tests.length,
-      "DYS Skipped 2 tests."
+      "Skipped incorrect number of tests."
     assert_equal 'api/noskip1', tests[0].request.path,
-      "DYS Did not skip first unskipped test."
+      "Test was supposed to be first, but was not"
     assert_equal 'api/noskip2', tests[1].request.path,
-      "DYS Did not skip second unskipped test."
+      "Test was supposed to be second, but was not."
   end
 
   def test_note
@@ -81,10 +81,10 @@ class TestBase < SmarfDocTest
     tests= SmarfDoc.current.tests
     first = Request.new("GET", {id: 12}, 'api/skip')
     last  = Request.new("GET", {id: 12}, 'api/noskip')
-    SmarfDoc.note "안녕하세요"
+    SmarfDoc.information(:note, "Endpoint note")
     SmarfDoc.run!(first, response)
     SmarfDoc.run!(last, response)
-    assert_includes tests.first.compile_template, "안녕하세요",
+    assert_includes tests.first.compile_template, "Endpoint note",
       "Could not find note in documentation."
   end
 end
