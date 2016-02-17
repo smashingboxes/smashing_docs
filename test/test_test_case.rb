@@ -16,7 +16,7 @@ class TestTestCase < SmashingDocsTest
   end
 
   def test_compile_with_file
-    SmashingDocs.config { |c| c.template_file = 'test/fake_template.md' }
+    SmashingDocs.config { |c| c.template_file = 'test/fake_template.md.erb' }
     test = SmashingDocs::TestCase.new(request, response)
     test.template = SmashingDocs::Conf.template
     assert_includes test.compile_template, "use ERB"

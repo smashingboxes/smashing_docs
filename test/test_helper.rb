@@ -6,7 +6,7 @@ require 'pry'
 class SmashingDocsTest < Minitest::Test
   def setup
     SmashingDocs.config do |c|
-      c.template_file = 'test/fake_template.md'
+      c.template_file = 'test/fake_template.md.erb'
       c.output_file   = 'test/fake_output.md'
     end
   end
