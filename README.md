@@ -6,7 +6,7 @@
 
 In your gemfile add the following to your test group:
 
-`gem 'smashing_docs', github: 'smashingboxes/smashing_docs'`
+`gem 'smashing_docs', git: 'https://github.com/smashingboxes/smashing_docs.git'`
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 
