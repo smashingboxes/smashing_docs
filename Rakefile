@@ -1,16 +1,6 @@
-require 'rake/testtask'
-require 'bundler/gem_tasks'
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-end
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 
-desc "Run tests"
-task :default => :test
+RSpec::Core::RakeTask.new(:spec)
 
-namespace:smashing_docs do
-  desc "Generates initial configuration"
-  task :install do
-    #RSpec install
-
-  end
-end
+task :default => :spec
