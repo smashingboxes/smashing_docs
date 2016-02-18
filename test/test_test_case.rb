@@ -8,10 +8,10 @@ class TestTestCase < SmashingDocsTest
 
   def test_compile_template
     template     = "<%= 2 + 2 %>"
-    test_case.template = template
-    assert_equal test_case.template, template,
+    @test_case.template = template
+    assert_equal @test_case.template, template,
       "Could not set a template."
-    assert_equal "4", test_case.compile_template,
+    assert_equal "4", @test_case.compile_template,
       "Could not compile template"
   end
 
