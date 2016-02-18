@@ -7,8 +7,8 @@ RSpec.configure do |config|
   end
   config.before(:each) do
     SmashingDocs.config do |c|
-      c.template_file = 'test/fake_template.md.erb'
-      c.output_file   = 'test/fake_output.md'
+      c.template_file = 'spec/fake_template.md.erb'
+      c.output_file   = 'spec/fake_output.md'
     end
   end
   config.after(:each) do
