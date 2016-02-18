@@ -86,7 +86,7 @@ RSpec.describe SmashingDocs do
       SmashingDocs.aside("I am an aside")
       SmashingDocs.run!(first, response)
       expect(tests.first.compile_template).to include("<aside class='notice'>")
-      expect(tests.first.compile_template).to include("I am an aside")      
+      expect(tests.first.compile_template).to include("I am an aside")
     end
   end
 end
