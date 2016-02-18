@@ -15,7 +15,7 @@ Installation differs for RSpec/Minitest, so scroll to the appropriate section fo
 Add this to your `rails_helper.rb` It should go outside of other blocks
 (Do not place it inside the `RSpec.configure` block).
 ```ruby
-SmarfDoc.config do |c|
+SmashingDocs.config do |c|
   c.template_file = 'spec/template.md.erb'
   c.output_file   = 'api_docs.md'
 end
