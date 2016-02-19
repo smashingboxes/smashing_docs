@@ -25,14 +25,18 @@ class SmashingDocs
     @information[key] = value
   end
 
-  def run!(request, response)
+  def run!(request, response, test_hook)
+    run_all = self.class::Conf.run_all
     if @skip
       @skip = false
       return
     end
-    add_test_case(request, response)
+    if run_all
+      add_test_case(request, response)
+    else
+      add_test_case(request, response) unless test_hook
+    end
     @information = {}
-    @skip = false
     self
   end
 
@@ -67,13 +71,15 @@ class SmashingDocs
 # for an instance variable to be declared and used
 
   def self.finish!
-    current.sort_by_url!
-    current.output_testcases_to_file
-    current.clean_up!
+    unless current.tests.empty?
+      current.sort_by_url!
+      current.output_testcases_to_file
+      current.clean_up!
+    end
   end
 
-  def self.run!(request, response)
-    current.run!(request, response)
+  def self.run!(request, response, test_hook = false)
+    current.run!(request, response, test_hook)
   end
 
   def self.skip

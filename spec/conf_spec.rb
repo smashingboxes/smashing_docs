@@ -5,6 +5,7 @@ RSpec.describe SmashingDocs::Conf do
     SmashingDocs.config do |c|
       c.template_file = "spec/template.md.erb"
       c.output_file   = "api_docs.md"
+      c.run_all       = true
     end
   }
   it "sets the template file" do
@@ -13,5 +14,9 @@ RSpec.describe SmashingDocs::Conf do
 
   it "sets the output file" do
     expect(SmashingDocs::Conf.template_file).to eq("spec/template.md.erb")
+  end
+
+  it "sets run_all" do
+    expect(SmashingDocs::Conf.run_all).to eq(true)
   end
 end

@@ -28,6 +28,7 @@ Add this to your `rails_helper.rb` It should go outside of other blocks
 SmashingDocs.config do |c|
   c.template_file = 'spec/template.md.erb'
   c.output_file   = 'api_docs.md'
+  c.run_all       = true
 end
 ```
 
@@ -47,7 +48,7 @@ end
 Add this to your `spec_helper.rb`
 ```ruby
 config.after(:each, type: :controller) do
-  SmashingDocs.run!(request, response)
+  SmashingDocs.run!(request, response, true)
 end
 ```
 
@@ -56,7 +57,7 @@ The whole file should look like this
 RSpec.configure do |config|
   # Existing code
   config.after(:each, type: :controller) do
-    SmashingDocs.run!(request, response)
+    SmashingDocs.run!(request, response, true)
   end
   config.after(:suite) { SmashingDocs.finish! }
 end
@@ -103,13 +104,14 @@ class ActiveSupport::TestCase
   SmashingDocs.config do |c|
     c.template_file = 'test/template.md.erb'
     c.output_file   = 'api_docs.md'
+    c.run_all       = true
   end
   # More code
 end
 
 class ActionController::TestCase < ActiveSupport::TestCase
   def teardown
-    SmashingDocs.run!(request, response)
+    SmashingDocs.run!(request, response, true)
   end
 end
 

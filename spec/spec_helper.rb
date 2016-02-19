@@ -9,6 +9,7 @@ RSpec.configure do |config|
     SmashingDocs.config do |c|
       c.template_file = 'spec/fake_template.md.erb'
       c.output_file   = 'spec/fake_output.md'
+      c.run_all       = true
     end
   end
   config.after(:each) do
