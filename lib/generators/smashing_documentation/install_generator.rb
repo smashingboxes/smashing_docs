@@ -3,6 +3,20 @@ module SmashingDocumentation
   module Generators
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("../../../templates/", __FILE__)
+
+      def install
+        if Dir.exists?('spec')
+          update_rails_helper
+          update_spec_helper
+          generate_docs_template
+        else
+          puts "It does not appear that you have RSpec installed in your app"
+          puts "Please set up RSpec before running this installer"
+        end
+      end
+
+      private
+
       def update_rails_helper
         destination = "spec/rails_helper.rb"
         create_file(destination) unless File.exist?(destination)
