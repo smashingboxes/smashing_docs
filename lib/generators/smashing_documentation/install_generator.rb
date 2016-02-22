@@ -36,7 +36,7 @@ module SmashingDocumentation
             "\n  config.after(:each, type: :controller) do\n"\
             "    SmashingDocs.run!(request, response)\n"\
             "  end\n"\
-            "  config.after(:suite) { SmashingDocs.finish! }",
+            "#  config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
           ) unless File.readlines(destination).grep(/config.after\(:suite\) { Smashing/).any?
         end
