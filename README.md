@@ -6,16 +6,26 @@
 
 In your gemfile add the following to your test group:
 
-`gem 'smashing_docs', git: 'https://github.com/smashingboxes/smashing_docs.git'`
+`gem 'smashing_docs', '~> 0.0.3'`
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 
-## Rspec Installation
+## Automatic Installation (RSpec only!)
+
+After you bundle, run:
+
+`rails generate smashing_documentation:install`
+
+SmashingDocs will be configured to run on all your controller tests with the default
+template, whenever you run your tests. Your API documentation will appear in the smashing_docs
+folder in the root of your Rails app.
+
+## Manual RSpec Installation
 
 Add this to your `rails_helper.rb` It should go outside of other blocks
 (Do not place it inside the `RSpec.configure` block).
 ```ruby
-SmarfDoc.config do |c|
+SmashingDocs.config do |c|
   c.template_file = 'spec/template.md.erb'
   c.output_file   = 'api_docs.md'
 end
@@ -61,7 +71,7 @@ it "responds with 200" do
 end
 ```
 
-## Minitest Installation
+## Manual Minitest Installation
 
 Add the code from below to `test_helper.rb`:
 ```ruby

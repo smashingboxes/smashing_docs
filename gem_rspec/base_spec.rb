@@ -39,12 +39,14 @@ RSpec.describe SmashingDocs do
   end
 
   describe ".finish!" do
-    it "creates the docs file with output from the template" do
-      SmashingDocs.run!(first, response)
-      SmashingDocs.run!(last, response)
-      SmashingDocs.finish!
-      expect(File).to exist(file)
-      expect(File.read(file)).to include("You can use ERB")
+    context "when there are tests" do
+      it "creates the docs file with output from the template" do
+        SmashingDocs.run!(first, response)
+        SmashingDocs.run!(last, response)
+        SmashingDocs.finish!
+        expect(File).to exist(file)
+        expect(File.read(file)).to include("You can use ERB")
+      end
     end
   end
 
@@ -86,7 +88,7 @@ RSpec.describe SmashingDocs do
       SmashingDocs.aside("I am an aside")
       SmashingDocs.run!(first, response)
       expect(tests.first.compile_template).to include("<aside class='notice'>")
-      expect(tests.first.compile_template).to include("I am an aside")      
+      expect(tests.first.compile_template).to include("I am an aside")
     end
   end
 end
