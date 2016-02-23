@@ -67,7 +67,6 @@ RSpec.describe SmashingDocs do
         expect(File.read(file)).to include("You can use ERB")
       end
     end
-
     context "when there are no tests" do
       it "does not overwrite the docs with an empty file" do
         # Generate docs

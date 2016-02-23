@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.summary = "Uses your test cases to write example documentation for your API."
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.version = '0.0.3'
+  s.version = '0.1.0'
 
   s.add_development_dependency "bundler", "~> 1.11"
   s.add_development_dependency "rake", "~> 10.0"
