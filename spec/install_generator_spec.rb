@@ -32,12 +32,4 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
       end
     end
   end
-  context "when RSpec is not installed" do
-    it "gives the user an error" do
-      File.rename 'spec', 's'
-      run_generator
-      expect(STDOUT).to receive(:puts).with("Please set up RSpec")
-      File.rename 's', 'spec'
-    end
-  end
 end
