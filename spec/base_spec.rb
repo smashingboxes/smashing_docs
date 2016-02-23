@@ -24,6 +24,7 @@ RSpec.describe SmashingDocs do
       it "adds both tests to the list of tests" do
         2.times { SmashingDocs.run!(request, response) }
         expect(tests.length).to eq(2)
+        SmashingDocs.current.push_docs
       end
     end
   end

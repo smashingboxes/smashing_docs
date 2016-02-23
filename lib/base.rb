@@ -16,6 +16,18 @@ class SmashingDocs
     @tests = []
   end
 
+  def push_docs
+    directory = `pwd`
+    app_name = directory.match(/\w+\n/).to_s.gsub(/\n/, "")
+    `cp "#{SmashingDocs::Conf.output_file}" ../"#{app_name}.wiki"`
+    output_file_name = SmashingDocs::Conf.output_file.match(/\w+\.md/)
+    Dir.chdir("../#{app_name}.wiki") do
+      `git add "#{output_file_name}"`
+      `git commit -m "Update Docs -- Auto post by SmashingDocs"`
+      `git push`
+    end
+  end
+
   def aside(msg)
     @aside = ''
     @aside = "<aside class='notice'>\n #{msg}\n</aside>"
