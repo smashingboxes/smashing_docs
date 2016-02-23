@@ -12,9 +12,7 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
         expect(File).to exist(rails_helper)
         expect(File.read(rails_helper)).to include("SmashingDocs.config do")
       end
-    end
 
-    describe "#update_spec_helper" do
       it "appends test suite hooks inside RSpec.configure block in spec_helper.rb" do
         run_generator
         expect(File).to exist(spec_helper)
@@ -32,6 +30,7 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
       end
     end
   end
+  
   context "when rspec is not installed" do
     it "does not install smashing_docs" do
       File.rename('spec', 's') if Dir.exists?('spec')

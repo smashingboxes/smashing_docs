@@ -38,7 +38,7 @@ module SmashingDocumentation
             "  end\n"\
             "  config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
-          ) unless File.readlines(destination).grep(/config.after\(:suite\) { Smashing/).any?
+          ) unless File.readlines(destination).grep(/SmashingDocs.finish/).any?
         end
       end
 
