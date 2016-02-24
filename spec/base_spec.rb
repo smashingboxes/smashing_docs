@@ -24,7 +24,6 @@ RSpec.describe SmashingDocs do
       it "adds both tests to the list of tests" do
         2.times { SmashingDocs.run!(request, response) }
         expect(tests.length).to eq(2)
-        SmashingDocs.current.push_docs
       end
     end
   end
@@ -88,6 +87,45 @@ RSpec.describe SmashingDocs do
       SmashingDocs.run!(first, response)
       expect(tests.first.compile_template).to include("<aside class='notice'>")
       expect(tests.first.compile_template).to include("I am an aside")
+    end
+  end
+
+  describe "#app_name" do
+    it "returns the name of the app it is installed in" do
+      expect(SmashingDocs.current.send(:app_name)).to eq("smashing_docs")
+    end
+  end
+
+  describe "#output_file" do
+    it "returns only the file name of the configured output file" do
+      expect(SmashingDocs.current.send(:output_file)).to eq("fake_output.md")
+    end
+  end
+
+  describe "#wiki_repo_exists(wiki_repo)" do
+    context "when the repo exists" do
+      let(:wiki_repo) { "../#{SmashingDocs.current.send(:app_name)}.wiki" }
+      it "returns true" do
+        expect(SmashingDocs.current.send(:wiki_repo_exists?, wiki_repo)).to eq(true)
+      end
+    end
+
+    context "when the repo does not exist" do
+      let(:wiki_repo) { "../ifyoumakethisdirectorythetestwillfail.wiki" }
+      it "returns false" do
+        expect(SmashingDocs.current.send(:wiki_repo_exists?, wiki_repo)).to eq(false)
+      end
+    end
+  end
+
+  describe "#copy_docs_to_wiki_repo(wiki_repo)" do
+    let(:wiki_repo) { "../#{SmashingDocs.current.send(:app_name)}.wiki" }
+    let(:output_file) { SmashingDocs.current.send(:output_file) }
+    it "makes a copy of the docs in the wiki folder" do
+      `rm -f ../smashing_docs.wiki/"#{output_file}"` # -f just in case the file's stubborn
+      expect(!File.exist?("../smashing_docs.wiki/#{output_file}"))
+      SmashingDocs.current.send(:copy_docs_to_wiki_repo, wiki_repo)
+      expect(File.exist?("../smashing_docs.wiki/#{output_file}"))
     end
   end
 end
