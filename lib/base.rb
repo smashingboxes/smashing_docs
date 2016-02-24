@@ -16,28 +16,27 @@ class SmashingDocs
     @tests = []
   end
 
-  def aside(msg)
-    @aside = ''
-    @aside = "<aside class='notice'>\n #{msg}\n</aside>"
-  end
-
   def information(key, value)
     @information[key] = value
   end
 
-  def run!(request, response)
+  def run!(request, response, called_by_test_hook)
+    run_all = self.class::Conf.run_all
     if @skip
       @skip = false
       return
     end
-    add_test_case(request, response)
+    if run_all
+      add_test_case(request, response)
+    else
+      add_test_case(request, response) unless called_by_test_hook
+    end
     @information = {}
-    @skip = false
     self
   end
 
   def add_test_case(request, response)
-    test = self.class::TestCase.new(request, response, @information, @aside)
+    test = self.class::TestCase.new(request, response, @information)
     test.template = self.class::Conf.template
     self.tests << test
   end
@@ -67,13 +66,15 @@ class SmashingDocs
 # for an instance variable to be declared and used
 
   def self.finish!
-    current.sort_by_url!
-    current.output_testcases_to_file
-    current.clean_up!
+    unless current.tests.empty?
+      current.sort_by_url!
+      current.output_testcases_to_file
+      current.clean_up!
+    end
   end
 
-  def self.run!(request, response)
-    current.run!(request, response)
+  def self.run!(request, response, called_by_test_hook = false)
+    current.run!(request, response, called_by_test_hook)
   end
 
   def self.skip
@@ -82,10 +83,6 @@ class SmashingDocs
 
   def self.information(key, value)
     current.information(key, value)
-  end
-
-  def self.aside(message)
-    current.aside(message)
   end
 
   def self.current
