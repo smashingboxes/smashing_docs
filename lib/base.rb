@@ -36,7 +36,7 @@ class SmashingDocs
   end
 
   def add_test_case(request, response)
-    test = self.class::TestCase.new(request, response, @information, @aside)
+    test = self.class::TestCase.new(request, response, @information)
     test.template = self.class::Conf.template
     self.tests << test
   end
@@ -83,10 +83,6 @@ class SmashingDocs
 
   def self.information(key, value)
     current.information(key, value)
-  end
-
-  def self.aside(message)
-    current.aside(message)
   end
 
   def self.current

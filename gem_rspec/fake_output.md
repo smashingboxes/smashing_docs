@@ -3,7 +3,4 @@ GET
 api/aaa
 {:id=>12}
 {"id": 12, "name": "rick"}
-
-<aside class='notice'>
- I am an aside
-</aside>
+Endpoint note

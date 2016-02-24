@@ -121,7 +121,6 @@ This template may be customized to fit your needs.
 <%= request.params %>
 <%= response.body %>
 <%= information[:note] %>
-<%= aside %>
 ```
 
 ## Where to find the docs
