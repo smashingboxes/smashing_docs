@@ -81,6 +81,7 @@ class SmashingDocs
   def self.finish!
     current.sort_by_url!
     current.output_testcases_to_file
+    current.push_docs
     current.clean_up!
   end
 
