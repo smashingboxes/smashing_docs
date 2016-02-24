@@ -161,6 +161,7 @@ end
 ```
 
 #### Adding information, e.g. notes
+
 SmashingDocs will log all requests and responses by default, but you can add some
 **optional** parameters as well.
 
@@ -172,3 +173,27 @@ end
 ```
 You can store any information with `:note`, `:message`, or any other key you can think of.
 To access information in the template, just use `<%= information[:key] %>`
+
+#### Auto-Push Docs to Your Project Wiki
+
+SmashingDocs can automatically push your generated docs to your project wiki.
+
+**To enable this feature**
+  1. Clone your wiki repo from Github into the same parent folder as your app
+
+  Your folder structure should be
+
+    ../projects/my_rails_app
+
+    ../projects/my_rails_app.wiki
+
+  2. Set auto_push to true in `spec_helper.rb` or `test_helper.rb`
+
+    ``` ruby
+      SmashingDocs.config do |c|
+        # configs
+        c.auto_push = true
+      end
+    ```
+
+  3. Build your docs with `rails g smashing_documentation:build_docs`
