@@ -115,14 +115,4 @@ RSpec.describe SmashingDocs do
       expect(tests.first.compile_template).to include("Endpoint note")
     end
   end
-
-  describe ".aside(message)" do
-    # The template file must have <%= information[:note] %>
-    it "sends information to be displayed about the endpoint" do
-      SmashingDocs.aside("I am an aside")
-      SmashingDocs.run!(first, response)
-      expect(tests.first.compile_template).to include("<aside class='notice'>")
-      expect(tests.first.compile_template).to include("I am an aside")
-    end
-  end
 end
