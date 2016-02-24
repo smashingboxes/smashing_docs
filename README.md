@@ -26,12 +26,13 @@ Add this to your `rails_helper.rb` It should go outside of other blocks
 (Do not place it inside the `RSpec.configure` block).
 ```ruby
 SmashingDocs.config do |c|
-  c.template_file = 'spec/template.md.erb'
-  c.output_file   = 'api_docs.md'
+  c.template_file = 'smashing_docs/template.md'
+  c.output_file   = 'smashing_docs/api_docs.md'
+  c.run_all       = true
 end
 ```
 
-Add the following line to `spec_helper.rb` inside the `RSpec.configure` block
+Add the following content to `spec_helper.rb` inside the `RSpec.configure` block
 
 `config.after(:suite) { SmashingDocs.finish! }`
 
@@ -39,30 +40,24 @@ It should look like this
 ```ruby
 RSpec.configure do |config|
   # Existing code
-  config.after(:suite) { SmashingDocs.finish! }
-end
-```
-#### To run on all controller tests
-
-Add this to your `spec_helper.rb`
-```ruby
-config.after(:each, type: :controller) do
-  SmashingDocs.run!(request, response)
-end
-```
-
-The whole file should look like this
-```ruby
-RSpec.configure do |config|
-  # Existing code
   config.after(:each, type: :controller) do
-    SmashingDocs.run!(request, response)
+    SmashingDocs.run!(request, response, true)
   end
   config.after(:suite) { SmashingDocs.finish! }
 end
 ```
+
 #### To run on only select tests
-Just add `SmashingDocs.run!(request, response)` to specific tests
+Set the `c.run_all` line to `false` in `rails_helper.rb`
+```ruby
+SmashingDocs.config do |c|
+  c.template_file = 'smashing_docs/template.md'
+  c.output_file   = 'smashing_docs/api_docs.md'
+  c.run_all       = false
+end
+```
+
+Then just add `SmashingDocs.run!(request, response)` to the tests you want to run
 ```ruby
 it "responds with 200" do
   get :index
@@ -78,47 +73,33 @@ Add the code from below to `test_helper.rb`:
 class ActiveSupport::TestCase
   # Already existing code
   SmashingDocs.config do |c|
-    c.template_file = 'test/template.md.erb'
-    c.output_file   = 'api_docs.md'
-  end
-  # More code
-end
-
-MiniTest::Unit.after_tests { SmashingDocs.finish! }
-```
-#### To run on all controller tests
-Add this to `test_helper.rb` as well:
-```ruby
-class ActionController::TestCase < ActiveSupport::TestCase
-  def teardown
-    SmashingDocs.run!(request, response)
-  end
-end
-```
-
-Your code should look like this:
-```ruby
-class ActiveSupport::TestCase
-  # Already existing code
-  SmashingDocs.config do |c|
-    c.template_file = 'test/template.md.erb'
-    c.output_file   = 'api_docs.md'
+    c.template_file = 'smashing_docs/template.md'
+    c.output_file   = 'smashing_docs/api_docs.md'
+    c.run_all       = true
   end
   # More code
 end
 
 class ActionController::TestCase < ActiveSupport::TestCase
   def teardown
-    SmashingDocs.run!(request, response)
+    SmashingDocs.run!(request, response, true)
   end
 end
 
 MiniTest::Unit.after_tests { SmashingDocs.finish! }
 ```
-
 
 #### To run on only select tests
-Just add `SmashingDocs.run!(request, response)` to specific tests
+Set the `c.run_all` line to `false` in `test_helper.rb`
+```ruby
+SmashingDocs.config do |c|
+  c.template_file = 'smashing_docs/template.md'
+  c.output_file   = 'smashing_docs/api_docs.md'
+  c.run_all       = false
+end
+```
+
+Then just add `SmashingDocs.run!(request, response)` to specific tests
 ```ruby
 def get_index
   get :index
@@ -129,8 +110,9 @@ end
 
 ## Setting a template
 
-If you copied the code from above, SmashingDocs will look for a template file located at either
-`test/template.md.erb` or `spec/template.md.erb`, depending on your test suite.
+If you copied the code from above, SmashingDocs will look for a template file located in
+`smashing_docs/template.md`
+
 This template may be customized to fit your needs.
 
 ```erb
@@ -139,7 +121,6 @@ This template may be customized to fit your needs.
 <%= request.params %>
 <%= response.body %>
 <%= information[:note] %>
-<%= aside %>
 ```
 
 ## Where to find the docs

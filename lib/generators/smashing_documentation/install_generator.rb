@@ -24,6 +24,7 @@ module SmashingDocumentation
           "SmashingDocs.config do |c|\n"\
           "  c.template_file = 'smashing_docs/template.md'\n"\
           "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
+          "  c.run_all       = true\n"\
           "end"
           ) unless File.readlines(destination).grep(/SmashingDocs.config/).any?
       end
@@ -34,7 +35,7 @@ module SmashingDocumentation
           insert_into_file(
             destination,
             "\n  config.after(:each, type: :controller) do\n"\
-            "    SmashingDocs.run!(request, response)\n"\
+            "    SmashingDocs.run!(request, response, true)\n"\
             "  end\n"\
             "#  config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
