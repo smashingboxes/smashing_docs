@@ -81,7 +81,7 @@ RSpec.describe SmashingDocs do
   end
 
   describe ".aside(message)" do
-    # The template file must have <%= information[:note] %>
+    # The template file must have <%= aside %>
     it "sends information to be displayed about the endpoint" do
       SmashingDocs.aside("I am an aside")
       SmashingDocs.run!(first, response)
@@ -126,6 +126,22 @@ RSpec.describe SmashingDocs do
       expect(!File.exist?("../smashing_docs.wiki/#{output_file}"))
       SmashingDocs.current.send(:copy_docs_to_wiki_repo, wiki_repo)
       expect(File.exist?("../smashing_docs.wiki/#{output_file}"))
+    end
+  end
+
+  describe "#auto_push?" do
+    context "when auto_push configuration is false" do
+      let!(:config) { SmashingDocs.config { |c| c.auto_push = false } }
+      it "returns false" do
+        expect(!SmashingDocs.current.send(:auto_push?))
+      end
+    end
+    context "when auto_push configuration is true" do
+      let!(:config) { SmashingDocs.config { |c| c.auto_push = true } }
+      it "returns true" do
+        expect(SmashingDocs.current.send(:auto_push?))
+        SmashingDocs.config { |c| c.auto_push = false } # Config stays changed without this line
+      end
     end
   end
 end

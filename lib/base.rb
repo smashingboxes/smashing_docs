@@ -72,6 +72,10 @@ class SmashingDocs
     end
   end
 
+  def auto_push?
+    self.class::Conf.auto_push
+  end
+
 # = = = =
 # These class methods are used to persist test data across tests
 # RSpec and Minitest do not support hooks that would allow

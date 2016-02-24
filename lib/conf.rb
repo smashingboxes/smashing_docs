@@ -1,6 +1,6 @@
 class SmashingDocs::Conf
   class << self
-    attr_accessor :template_file, :output_file
+    attr_accessor :template_file, :output_file, :auto_push
 
     @output_file = 'documentation.md'
 
