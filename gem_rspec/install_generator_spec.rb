@@ -33,8 +33,10 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
   context "when rspec is not installed" do
     it "does not install smashing_docs" do
       File.rename('spec', 's') if Dir.exists?('spec')
-      run_generator
-      expect(File).to_not exist(rails_helper)
+      run_generator do
+        expect(File).to_not exist(rails_helper)
+        expect(STDOUT).to receive(:puts).with("KLJLK")
+      end
       File.rename('s', 'spec') if Dir.exists?('s')
 
       # STDOUT is not tested here because it is suppressed in generator tests
