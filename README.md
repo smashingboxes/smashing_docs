@@ -17,8 +17,12 @@ After you bundle, run:
 `rails generate smashing_documentation:install`
 
 SmashingDocs will be configured to run on all your controller tests with the default
-template, whenever you run your tests. Your API documentation will appear in the smashing_docs
-folder in the root of your Rails app.
+template.
+
+#### To generate your docs
+
+Run `rails g smashing_documentation:build_docs`, and your docs will be waiting for you
+in the `smashing_docs` folder.
 
 ## Manual RSpec Installation
 
@@ -43,7 +47,7 @@ RSpec.configure do |config|
   config.after(:each, type: :controller) do
     SmashingDocs.run!(request, response, true)
   end
-  config.after(:suite) { SmashingDocs.finish! }
+  # config.after(:suite) { SmashingDocs.finish! }
 end
 ```
 
