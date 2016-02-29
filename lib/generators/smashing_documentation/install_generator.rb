@@ -20,10 +20,21 @@ module SmashingDocumentation
       end
 
       private
-
       def configure_smashing_docs(config_file)
         create_config_file(config_file)
         add_configuration(config_file)
+      end
+
+      def update_rails_helper
+        destination = "spec/rails_helper.rb"
+        create_file(destination) unless File.exist?(destination)
+        append_file(destination,
+          "SmashingDocs.config do |c|\n"\
+          "  c.template_file = 'smashing_docs/template.md'\n"\
+          "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
+          "  c.run_all       = true\n"\
+          "end"
+          ) unless File.readlines(destination).grep(/SmashingDocs.config/).any?
       end
 
       def add_rspec_hooks
@@ -32,11 +43,11 @@ module SmashingDocumentation
           insert_into_file(
             destination,
             "\n  config.after(:each, type: :controller) do\n"\
-            "    SmashingDocs.run!(request, response)\n"\
+            "    SmashingDocs.run!(request, response, true)\n"\
             "  end\n"\
-            "#  config.after(:suite) { SmashingDocs.finish! }",
+            " # config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
-          ) unless File.readlines(destination).grep(/config.after\(:suite\) { Smashing/).any?
+          ) unless File.readlines(destination).grep(/SmashingDocs.finish/).any?
         end
       end
 

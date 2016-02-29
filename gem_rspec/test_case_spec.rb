@@ -13,7 +13,7 @@ RSpec.describe SmashingDocs::TestCase do
     end
 
     context "with a template file" do
-      let!(:template) { SmashingDocs.config { |c| c.template_file = 'spec/fake_template.md.erb' } }
+      let!(:template) { SmashingDocs.config { |c| c.template_file = 'gem_rspec/fake_template.md.erb' } }
       it "sets the template file and returns docs matching the template" do
         test_case.template = SmashingDocs::Conf.template
         expect(test_case.compile_template).to include("use ERB")

@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'generator_spec'
 require 'generators/smashing_documentation/install_generator'
 RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :generator do
+  let(:rails_helper) { "spec/rails_helper.rb" }
+  let(:spec_helper) { "spec/spec_helper.rb" }
+  let(:docs_template) { "smashing_docs/template.md" }
   context "when rspec is installed" do
     describe "#configure_smashing_docs" do
       let(:rails_helper) { "spec/rails_helper.rb" }
@@ -12,20 +15,18 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
         `rm -r smashing_docs`
       end
     end
-
     describe "#add_rspec_hooks" do
       let(:spec_helper) { "spec/spec_helper.rb" }
       it "appends test suite hooks inside RSpec.configure block in spec_helper.rb" do
         run_generator
         expect(File).to exist(spec_helper)
-        expect(File.read(spec_helper)).to include("config.after(:each)")
+        expect(File.read(spec_helper)).to include("config.after(:each,")
         expect(File.read(spec_helper)).to include("config.after(:suite)")
         `rm -r smashing_docs`
       end
     end
 
     describe "#generate_docs_template" do
-      let(:docs_template) { "smashing_docs/template.md" }
       it "generates the default docs template" do
         run_generator
         expect(File).to exist(docs_template)
@@ -63,6 +64,18 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
         `rm #{test_helper}`
         `rm -r smashing_docs`
       end
+    end
+  end
+  context "when no test suite is installed" do
+    it "does not install smashing_docs" do
+      `rm "#{rails_helper}"`
+      File.rename('spec', 's') if Dir.exists?('spec')
+      File.rename('test', 't') if Dir.exists?('test')
+      run_generator
+      File.rename('s', 'spec') if Dir.exists?('s')
+      File.rename('t', 'test') if Dir.exists?('t')
+      expect(File).to_not exist(rails_helper)
+      # STDOUT is not tested here because it is suppressed in generator tests
     end
   end
 end
