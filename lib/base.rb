@@ -16,6 +16,17 @@ class SmashingDocs
     @tests = []
   end
 
+  def add_docs_to_wiki
+    wiki_repo = "../#{app_name}.wiki"
+    if wiki_repo && wiki_repo_exists?(wiki_repo)
+      copy_docs_to_wiki_repo(wiki_repo)
+      push_docs_to_github(wiki_repo)
+    else
+      puts "Wiki folder was not found. Please set up and clone your"\
+           " wiki before using auto push"
+    end
+  end
+
   def information(key, value)
     @information[key] = value
   end
@@ -60,6 +71,10 @@ class SmashingDocs
     end
   end
 
+  def auto_push?
+    self.class::Conf.auto_push
+  end
+
 # = = = =
 # These class methods are used to persist test data across tests
 # RSpec and Minitest do not support hooks that would allow
@@ -69,6 +84,7 @@ class SmashingDocs
     unless current.tests.empty?
       current.sort_by_url!
       current.output_testcases_to_file
+      current.add_docs_to_wiki if current.auto_push?
       current.clean_up!
     end
   end
@@ -92,5 +108,32 @@ class SmashingDocs
 
   def self.config(&block)
     yield(self::Conf)
+  end
+end
+# = = = =
+private
+
+def app_name
+  directory = `pwd`
+  directory.match(/\w+\n/).to_s.gsub(/\n/, "")
+end
+
+def output_file
+  SmashingDocs::Conf.output_file.match(/\w+\.md/).to_s
+end
+
+def wiki_repo_exists?(wiki_repo)
+  File.exist?(wiki_repo)
+end
+
+def copy_docs_to_wiki_repo(wiki_repo)
+  `cp "#{SmashingDocs::Conf.output_file}" "#{wiki_repo}"`
+end
+
+def push_docs_to_github(wiki_repo)
+  Dir.chdir(wiki_repo) do
+    `git add "#{output_file}"`
+    `git commit -m "Update Docs -- Auto post by SmashingDocs"`
+    `git push`
   end
 end

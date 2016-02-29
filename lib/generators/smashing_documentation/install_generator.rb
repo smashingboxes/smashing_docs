@@ -24,6 +24,7 @@ module SmashingDocumentation
           "SmashingDocs.config do |c|\n"\
           "  c.template_file = 'smashing_docs/template.md'\n"\
           "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
+          "  c.auto_push     = false\n"\
           "  c.run_all       = true\n"\
           "end"
           ) unless File.readlines(destination).grep(/SmashingDocs.config/).any?

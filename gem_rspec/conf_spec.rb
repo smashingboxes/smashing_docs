@@ -5,6 +5,7 @@ RSpec.describe SmashingDocs::Conf do
     SmashingDocs.config do |c|
       c.template_file = "gem_spec/fake_template.md.erb"
       c.output_file   = "api_docs.md"
+      c.auto_push     = false
       c.run_all       = true
     end
   }
@@ -18,5 +19,9 @@ RSpec.describe SmashingDocs::Conf do
 
   it "sets run_all" do
     expect(SmashingDocs::Conf.run_all).to eq(true)
+  end
+
+  it "sets the auto_push boolean" do
+    expect(!SmashingDocs::Conf.auto_push)
   end
 end
