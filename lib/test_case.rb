@@ -1,11 +1,11 @@
 require 'erb'
 
 class SmashingDocs::TestCase
-  attr_reader :request, :response, :created_at, :information, :aside
+  attr_reader :request, :response, :created_at, :information
   attr_accessor :template
 
-  def initialize(request, response, information = {}, aside = '')
-    @request, @response, @information, @aside = request, response, information, aside
+  def initialize(request, response, information = {})
+    @request, @response, @information = request, response, information
     @created_at = Time.now
   end
 
