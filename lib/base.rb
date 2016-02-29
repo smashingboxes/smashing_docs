@@ -95,7 +95,7 @@ class SmashingDocs
   def self.skip
     current.skip
   end
-
+  
   def self.information(key, value)
     current.information(key, value)
   end

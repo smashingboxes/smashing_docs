@@ -3,22 +3,24 @@ require 'generator_spec'
 require 'generators/smashing_documentation/install_generator'
 RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :generator do
   context "when rspec is installed" do
-    describe "#update_spec_helper" do
+    describe "#configure_smashing_docs" do
       let(:rails_helper) { "spec/rails_helper.rb" }
       it "appends the SmashingDocs config to rails_helper.rb" do
         run_generator
         expect(File).to exist(rails_helper)
         expect(File.read(rails_helper)).to include("SmashingDocs.config do")
+        `rm -r smashing_docs`
       end
     end
 
-    describe "#update_spec_helper" do
+    describe "#add_rspec_hooks" do
       let(:spec_helper) { "spec/spec_helper.rb" }
       it "appends test suite hooks inside RSpec.configure block in spec_helper.rb" do
         run_generator
         expect(File).to exist(spec_helper)
         expect(File.read(spec_helper)).to include("config.after(:each)")
         expect(File.read(spec_helper)).to include("config.after(:suite)")
+        `rm -r smashing_docs`
       end
     end
 
@@ -29,6 +31,37 @@ RSpec.describe SmashingDocumentation::Generators::InstallGenerator, type: :gener
         expect(File).to exist(docs_template)
         expect(File.read(docs_template)).to include("request.method")
         expect(File.read(docs_template)).to include("response.body")
+        `rm -r smashing_docs`
+      end
+    end
+  end
+
+  context "when minitest is installed" do
+    describe "#configure_smashing_docs" do
+      let(:test_helper) { "test/test_helper.rb" }
+      it "appends the SmashingDocs config to test_helper.rb" do
+        `mv spec s`
+        run_generator
+        expect(File).to exist(test_helper)
+        expect(File.read(test_helper)).to include("SmashingDocs.config do")
+        `rm #{test_helper}`
+        `mv s spec`
+        `rm -r smashing_docs`
+      end
+    end
+
+    describe "#add_minitest_hooks" do
+      let(:test_helper) { "test/test_helper.rb" }
+      it "appends test suite hooks inside to the test_helper.rb" do
+        `mv spec s`
+        run_generator
+        expect(File).to exist(test_helper)
+        expect(File.read(test_helper)).to include("teardown")
+        expect(File.read(test_helper)).to include("after_tests")
+        expect(File.read(test_helper)).to include("SmashingDocs")
+        `mv s spec`
+        `rm #{test_helper}`
+        `rm -r smashing_docs`
       end
     end
   end
