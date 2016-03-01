@@ -10,7 +10,7 @@ In your gemfile add the following to your test group:
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 
-## Automatic Installation (RSpec only!)
+## Automatic Installation (RSpec or Minitest!)
 
 After you bundle, run:
 
@@ -19,10 +19,13 @@ After you bundle, run:
 SmashingDocs will be configured to run on all your controller tests with the default
 template.
 
+If you're using RSpec and you haven't required `rails_helper` in your tests, do that now.
+
+`require 'rails_helper'`
+
 #### To generate your docs
 
-Run `rails g smashing_documentation:build_docs`, and your docs will be waiting for you
-in the `smashing_docs` folder.
+Run `rails g smashing_documentation:build_docs`, and your docs will be waiting for you in the `smashing_docs` folder.
 
 ## Manual RSpec Installation
 
@@ -32,6 +35,7 @@ Add this to your `rails_helper.rb` It should go outside of other blocks
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = true
 end
 ```
@@ -57,6 +61,7 @@ Set the `c.run_all` line to `false` in `rails_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = false
 end
 ```
@@ -79,6 +84,7 @@ class ActiveSupport::TestCase
   SmashingDocs.config do |c|
     c.template_file = 'smashing_docs/template.md'
     c.output_file   = 'smashing_docs/api_docs.md'
+    c.auto_push     = false
     c.run_all       = true
   end
   # More code
@@ -99,6 +105,7 @@ Set the `c.run_all` line to `false` in `test_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = false
 end
 ```

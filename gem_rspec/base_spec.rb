@@ -115,4 +115,59 @@ RSpec.describe SmashingDocs do
       expect(tests.first.compile_template).to include("Endpoint note")
     end
   end
+
+  describe "#app_name" do
+    it "returns the name of the app it is installed in" do
+      expect(SmashingDocs.current.send(:app_name)).to eq("smashing_docs")
+    end
+  end
+
+  describe "#output_file" do
+    it "returns only the file name of the configured output file" do
+      expect(SmashingDocs.current.send(:output_file)).to eq("fake_output.md")
+    end
+  end
+
+  describe "#wiki_repo_exists(wiki_repo)" do
+    context "when the repo exists" do
+      let(:wiki_repo) { "../#{SmashingDocs.current.send(:app_name)}.wiki" }
+      it "returns true" do
+        expect(SmashingDocs.current.send(:wiki_repo_exists?, wiki_repo)).to eq(true)
+      end
+    end
+
+    context "when the repo does not exist" do
+      let(:wiki_repo) { "../ifyoumakethisdirectorythetestwillfail.wiki" }
+      it "returns false" do
+        expect(SmashingDocs.current.send(:wiki_repo_exists?, wiki_repo)).to eq(false)
+      end
+    end
+  end
+
+  describe "#copy_docs_to_wiki_repo(wiki_repo)" do
+    let(:wiki_repo) { "../#{SmashingDocs.current.send(:app_name)}.wiki" }
+    let(:output_file) { SmashingDocs.current.send(:output_file) }
+    it "makes a copy of the docs in the wiki folder" do
+      `rm -f ../smashing_docs.wiki/"#{output_file}"` # -f just in case the file's stubborn
+      expect(!File.exist?("../smashing_docs.wiki/#{output_file}"))
+      SmashingDocs.current.send(:copy_docs_to_wiki_repo, wiki_repo)
+      expect(File.exist?("../smashing_docs.wiki/#{output_file}"))
+    end
+  end
+
+  describe "#auto_push?" do
+    context "when auto_push configuration is false" do
+      let!(:config) { SmashingDocs.config { |c| c.auto_push = false } }
+      it "returns false" do
+        expect(!SmashingDocs.current.send(:auto_push?))
+      end
+    end
+    context "when auto_push configuration is true" do
+      let!(:config) { SmashingDocs.config { |c| c.auto_push = true } }
+      it "returns true" do
+        expect(SmashingDocs.current.send(:auto_push?))
+        SmashingDocs.config { |c| c.auto_push = false } # Config stays changed without this line
+      end
+    end
+  end
 end
