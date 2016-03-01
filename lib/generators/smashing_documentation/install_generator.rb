@@ -73,6 +73,7 @@ module SmashingDocumentation
         config = "SmashingDocs.config do |c|\n"\
                  "  c.template_file = 'smashing_docs/template.md'\n"\
                  "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
+                 "  c.run_all       = true\n"\
                  "  c.auto_push     = false\n"\
                  "end\n"
         if using_minitest?
