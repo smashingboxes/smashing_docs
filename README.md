@@ -32,6 +32,7 @@ Add this to your `rails_helper.rb` It should go outside of other blocks
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = true
 end
 ```
@@ -57,6 +58,7 @@ Set the `c.run_all` line to `false` in `rails_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = false
 end
 ```
@@ -79,6 +81,7 @@ class ActiveSupport::TestCase
   SmashingDocs.config do |c|
     c.template_file = 'smashing_docs/template.md'
     c.output_file   = 'smashing_docs/api_docs.md'
+    c.auto_push     = false
     c.run_all       = true
   end
   # More code
@@ -99,6 +102,7 @@ Set the `c.run_all` line to `false` in `test_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
+  c.auto_push     = false
   c.run_all       = false
 end
 ```
