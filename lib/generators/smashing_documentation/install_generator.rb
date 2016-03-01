@@ -35,7 +35,7 @@ module SmashingDocumentation
             "  end\n"\
             " # config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
-          ) unless File.readlines(helper).grep(/SmashingDocs.finish/).any?
+          ) unless test_hooks_already_setup?(helper)
         end
       end
 
@@ -66,9 +66,7 @@ module SmashingDocumentation
       end
 
       def add_configuration
-        if config_already_setup?
-          return
-        else
+        unless config_already_setup?
           config = "SmashingDocs.config do |c|\n"\
                    "  c.template_file = 'smashing_docs/template.md'\n"\
                    "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
