@@ -35,14 +35,14 @@ Add this to your `rails_helper.rb` It should go outside of other blocks
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
-  c.auto_push     = false
   c.run_all       = true
+  c.auto_push     = false
 end
 ```
 
 Add the following content to `spec_helper.rb` inside the `RSpec.configure` block
 
-`config.after(:suite) { SmashingDocs.finish! }`
+`# config.after(:suite) { SmashingDocs.finish! }`
 
 It should look like this
 ```ruby
@@ -61,8 +61,8 @@ Set the `c.run_all` line to `false` in `rails_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
-  c.auto_push     = false
   c.run_all       = false
+  c.auto_push     = false
 end
 ```
 
@@ -84,8 +84,8 @@ class ActiveSupport::TestCase
   SmashingDocs.config do |c|
     c.template_file = 'smashing_docs/template.md'
     c.output_file   = 'smashing_docs/api_docs.md'
-    c.auto_push     = false
     c.run_all       = true
+    c.auto_push     = false
   end
   # More code
 end
@@ -105,8 +105,8 @@ Set the `c.run_all` line to `false` in `test_helper.rb`
 SmashingDocs.config do |c|
   c.template_file = 'smashing_docs/template.md'
   c.output_file   = 'smashing_docs/api_docs.md'
-  c.auto_push     = false
   c.run_all       = false
+  c.auto_push     = false
 end
 ```
 
@@ -121,8 +121,8 @@ end
 
 ## Setting a template
 
-If you copied the code from above, SmashingDocs will look for a template file located in
-`smashing_docs/template.md`
+If you used the auto-installer or copied the code from above, SmashingDocs will
+look for a template file located in `smashing_docs/template.md`
 
 This template may be customized to fit your needs.
 
@@ -136,8 +136,9 @@ This template may be customized to fit your needs.
 
 ## Where to find the docs
 
-By default, the docs are output to `api_docs.md` in the root of the Rails project.
-You can change this by altering the config in `test_helper.rb` or `rails_helper.rb`.
+By default, the docs are output to `smashing_docs/api_docs.md` in the Rails project.
+You can change this by altering the config in `test_helper.rb` (MiniTest) or
+`rails_helper.rb`(RSpec).
 
 ## Additional Features
 
@@ -179,7 +180,7 @@ SmashingDocs can automatically push your generated docs to your project wiki.
 
     ../projects/my_rails_app.wiki
 
-  2. Set auto_push to true in `spec_helper.rb` or `test_helper.rb`
+  2. Set auto_push to true in `rails_helper.rb` or `test_helper.rb`
 
     ``` ruby
       SmashingDocs.config do |c|
@@ -189,3 +190,9 @@ SmashingDocs can automatically push your generated docs to your project wiki.
     ```
 
   3. Build your docs with `rails g smashing_documentation:build_docs`
+
+#### Generate Docs on Every Test Suite Run
+
+If you prefer to have your docs built every time you run the test suite, and do
+not want to run the build command, then uncomment the `SmashingDocs.finish` line
+in your `rails_helper` or `test_helper`
