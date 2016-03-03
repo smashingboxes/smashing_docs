@@ -75,6 +75,7 @@ module SmashingDocumentation
                  "  c.output_file   = 'smashing_docs/api_docs.md'\n"\
                  "  c.run_all       = true\n"\
                  "  c.auto_push     = false\n"\
+                 "  c.wiki_folder     = nil\n"\
                  "end\n"
         if using_minitest?
           insert_into_file(@config_file, config, after: "class ActiveSupport::TestCase\n")
