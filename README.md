@@ -37,6 +37,7 @@ SmashingDocs.config do |c|
   c.output_file   = 'smashing_docs/api_docs.md'
   c.run_all       = true
   c.auto_push     = false
+  c.wiki_folder   = nil
 end
 ```
 
@@ -59,10 +60,9 @@ end
 Set the `c.run_all` line to `false` in `rails_helper.rb`
 ```ruby
 SmashingDocs.config do |c|
-  c.template_file = 'smashing_docs/template.md'
-  c.output_file   = 'smashing_docs/api_docs.md'
+  # configs
   c.run_all       = false
-  c.auto_push     = false
+  # configs
 end
 ```
 
@@ -86,6 +86,7 @@ class ActiveSupport::TestCase
     c.output_file   = 'smashing_docs/api_docs.md'
     c.run_all       = true
     c.auto_push     = false
+    c.wiki_folder   = nil
   end
   # More code
 end
@@ -103,10 +104,9 @@ MiniTest::Unit.after_tests { SmashingDocs.finish! }
 Set the `c.run_all` line to `false` in `test_helper.rb`
 ```ruby
 SmashingDocs.config do |c|
-  c.template_file = 'smashing_docs/template.md'
-  c.output_file   = 'smashing_docs/api_docs.md'
+  # configs
   c.run_all       = false
-  c.auto_push     = false
+  # configs
 end
 ```
 
@@ -176,20 +176,30 @@ SmashingDocs can automatically push your generated docs to your project wiki.
 
   Your folder structure should be
 
-    ../projects/my_rails_app
+    ../projects/rails_app
 
     ../projects/my_rails_app.wiki
 
-  2. Set auto_push to true in `rails_helper.rb` or `test_helper.rb`
+  2. Set the name of your wiki folder (do **not** include '.wiki')
+
+    ``` ruby
+      SmashingDocs.config do |c|
+        # configs
+        c.wiki_folder = "my_rails_app"
+      end
+    ```
+
+  3. Set auto_push to true in `rails_helper.rb` or `test_helper.rb`
 
     ``` ruby
       SmashingDocs.config do |c|
         # configs
         c.auto_push = true
+        # configs
       end
     ```
 
-  3. Build your docs with `rails g smashing_documentation:build_docs`
+  4. Build your docs with `rails g smashing_documentation:build_docs`
 
 #### Generate Docs on Every Test Suite Run
 

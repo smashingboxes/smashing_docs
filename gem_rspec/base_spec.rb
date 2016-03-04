@@ -117,8 +117,16 @@ RSpec.describe SmashingDocs do
   end
 
   describe "#app_name" do
-    it "returns the name of the app it is installed in" do
-      expect(SmashingDocs.current.send(:app_name)).to eq("smashing_docs")
+    context "when wiki_folder config is set" do
+      let!(:config) { SmashingDocs.config { |c| c.wiki_folder = "different_folder" } }
+      it "returns the name of the wiki folder" do
+        expect(SmashingDocs.current.send(:app_name)).to eq("different_folder")
+      end
+    end
+    context "when wiki_folder config is nil" do
+      it "returns the name of the app it is installed in" do
+        expect(SmashingDocs.current.send(:app_name)).to eq("smashing_docs")
+      end
     end
   end
 
