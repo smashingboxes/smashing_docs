@@ -6,7 +6,7 @@
 
 In your gemfile add the following to your test group:
 
-`gem 'smashing_docs', '~> 0.0.3'`
+`gem 'smashing_docs', '~> 1.3.1'`
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 
@@ -14,7 +14,7 @@ Installation differs for RSpec/Minitest, so scroll to the appropriate section fo
 
 After you bundle, run:
 
-`rails generate smashing_documentation:install`
+`rails g docs:install`
 
 SmashingDocs will be configured to run on all your controller tests with the default
 template.
@@ -25,7 +25,7 @@ If you're using RSpec and you haven't required `rails_helper` in your tests, do 
 
 #### To generate your docs
 
-Run `rails g smashing_documentation:build_docs`, and your docs will be waiting for you in the `smashing_docs` folder.
+Run `rails g docs:build_docs`, and your docs will be waiting for you in the `smashing_docs` folder.
 
 ## Manual RSpec Installation
 
@@ -199,7 +199,7 @@ SmashingDocs can automatically push your generated docs to your project wiki.
       end
     ```
 
-  4. Build your docs with `rails g smashing_documentation:build_docs`
+  4. Build your docs with `rails g docs:build_docs`
 
 #### Generate Docs on Every Test Suite Run
 

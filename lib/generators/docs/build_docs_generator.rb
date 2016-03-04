@@ -1,5 +1,5 @@
 require 'rails/generators'
-module SmashingDocumentation
+module Docs
   module Generators
     class BuildDocsGenerator < Rails::Generators::Base
       source_root File.expand_path("../../../templates/", __FILE__)
