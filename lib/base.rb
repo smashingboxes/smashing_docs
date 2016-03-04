@@ -114,6 +114,7 @@ end
 private
 
 def app_name
+  return self.class::Conf.wiki_folder if self.class::Conf.wiki_folder
   directory = `pwd`
   directory.match(/\w+\n/).to_s.gsub(/\n/, "")
 end
