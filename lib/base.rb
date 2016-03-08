@@ -70,6 +70,11 @@ class SmashingDocs
           file.write(test.compile_template)
         rescue
           # Cry deeply
+          file.write("I had trouble with a test: \n")
+          file.write("Request:\n")
+          file.write("#{test.request}\n")
+          file.write("Response:\n")
+          file.write("#{test.response}\n")
         end
       end
     end
