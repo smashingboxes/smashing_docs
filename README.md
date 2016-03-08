@@ -6,7 +6,7 @@
 
 In your gemfile add the following to your test group:
 
-`gem 'smashing_docs', '~> 1.3.1'`
+`gem 'smashing_docs', '~> 1.3.2'`
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 

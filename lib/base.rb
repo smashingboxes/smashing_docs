@@ -66,7 +66,11 @@ class SmashingDocs
   def write_to_file
     File.open(self.class::Conf.output_file, 'a') do |file|
       @tests.each do |test|
-        file.write(test.compile_template)
+        begin
+          file.write(test.compile_template)
+        rescue
+          # Cry deeply
+        end
       end
     end
   end
