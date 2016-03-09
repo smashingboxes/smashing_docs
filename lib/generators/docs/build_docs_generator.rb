@@ -2,6 +2,7 @@ require 'rails/generators'
 module Docs
   module Generators
     class BuildDocsGenerator < Rails::Generators::Base
+      ENV['RAILS_ENV'] = 'test'
       source_root File.expand_path("../../../templates/", __FILE__)
       def build_docs
         destination = "spec/spec_helper.rb"
