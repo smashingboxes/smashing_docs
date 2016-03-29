@@ -33,7 +33,7 @@ module Docs
             "\n  config.after(:each, type: :controller) do\n"\
             "    SmashingDocs.run!(request, response, true)\n"\
             "  end\n"\
-            " # config.after(:suite) { SmashingDocs.finish! }",
+            "# config.after(:suite) { SmashingDocs.finish! }",
             after: "RSpec.configure do |config|"
           ) unless test_hooks_already_setup?(helper)
         end
