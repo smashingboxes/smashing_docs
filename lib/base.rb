@@ -71,10 +71,14 @@ class SmashingDocs
 
   def output_compiled_template(file)
     @tests.each do |test|
+      byebug
       begin
         file.write(test.compile_template)
       rescue
         # Cry deeply
+        File.open("smashing_docs/errors.txt", "a") do |file|
+          file.puts "I had some trouble with test #{test.request}"
+        end
       end
     end
   end

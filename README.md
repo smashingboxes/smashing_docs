@@ -10,7 +10,7 @@ In your gemfile add the following to your test group:
 
 Installation differs for RSpec/Minitest, so scroll to the appropriate section for guidance.
 
-## Automatic Installation (RSpec or Minitest!)
+## Automatic Installation (RSpec or Minitest)
 
 After you bundle, run:
 
