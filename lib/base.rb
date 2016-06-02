@@ -73,8 +73,12 @@ class SmashingDocs
     @tests.each do |test|
       begin
         file.write(test.compile_template)
-      rescue
-        # Cry deeply
+      rescue Exception => e
+        STDERR.write "\n"
+        STDERR.write "❌  An error occurred for: #{test.information[:endpoint_title]}\n"
+        STDERR.write "🔗  #{test.request.method} #{test.request.path}\n"
+        STDERR.write "⚠️  #{e.message}\n"
+        STDERR.write "\n"
       end
     end
   end

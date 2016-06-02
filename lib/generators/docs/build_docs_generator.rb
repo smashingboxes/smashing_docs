@@ -8,7 +8,7 @@ module Docs
         destination = "spec/spec_helper.rb"
         if File.exist?(destination)
           uncomment_lines(destination, /config.after\(:suite\) \{ SmashingDocs.finish! \}/)
-          `rspec spec`
+          system('rspec spec > /dev/null')
           comment_lines(destination, /config.after\(:suite\) \{ SmashingDocs.finish! \}/)
         else
           puts "Could not find spec/spec_helper.rb"
